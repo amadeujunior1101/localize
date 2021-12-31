@@ -13,67 +13,42 @@ import Profile from '../src/pages/Profile/Profile';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
-/* eslint-disable */
-// function HomeScreen() {
-//     return (
-//         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-//             <Text>Home Screen</Text>
-//         </View>
-//     );
-// }
-
-// function DetailsScreen() {
-//     return (
-//         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-//             <Text>Details Screen</Text>
-//         </View>
-//     );
-// }
-
 const Stack = createStackNavigator();
 
 function App() {
-  const [history, setHistory] = useState(null)
-  const [loadingHistory, setLoadingHistory] = useState(true)
+  const [history, setHistory] = useState(null);
+  const [loadingHistory, setLoadingHistory] = useState(true);
 
   useEffect(() => {
-    // await AsyncStorage.clear()
-    // const keys = await AsyncStorage.getAllKeys()
-    // console.log(keys)
-    AsyncStorage.getItem('@token')
-      .then(item => {
-        if (item !== null && item !== undefined) {
-
-          setHistory("Home")
-          setLoadingHistory(false)
-
-        } else {
-
-          setHistory("Login")
-          setLoadingHistory(false)
-        }
-
-      });
-
-  }, [])
+    AsyncStorage.getItem('@token').then(item => {
+      if (item !== null && item !== undefined) {
+        setHistory('Home');
+        setLoadingHistory(false);
+      } else {
+        setHistory('Login');
+        setLoadingHistory(false);
+      }
+    });
+  }, []);
 
   return (
-    loadingHistory === false &&
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName={history}
-        screenOptions={{
-          headerShown: false,
-        }}>
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="NewClient" component={NewClient} />
-        <Stack.Screen name="Find" component={Find} />
-        <Stack.Screen name="Visit" component={Visit} />
-        <Stack.Screen name="Schedule" component={Schedule} />
-        <Stack.Screen name="Profile" component={Profile} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    loadingHistory === false && (
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName={history}
+          screenOptions={{
+            headerShown: false,
+          }}>
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="NewClient" component={NewClient} />
+          <Stack.Screen name="Find" component={Find} />
+          <Stack.Screen name="Visit" component={Visit} />
+          <Stack.Screen name="Schedule" component={Schedule} />
+          <Stack.Screen name="Profile" component={Profile} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    )
   );
 }
 
